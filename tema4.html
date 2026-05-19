@@ -1,0 +1,2405 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tema 4 — Reclutamiento, selección y on boarding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,400&family=Inter+Tight:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root{
+    --cream: #FFF1E6;
+    --cream-2: #FFE4D0;
+    --ink: #1F1233;
+    --ink-soft: #3B2A55;
+    --paper: #FFFAF3;
+    --pink: #FF3D7F;
+    --pink-deep: #D81E5B;
+    --teal: #00BBA7;
+    --teal-deep: #008B7A;
+    --orange: #FF8C42;
+    --orange-deep: #E66B1F;
+    --purple: #6C5CE7;
+    --purple-deep: #4A3BB8;
+    --lime: #B8E62F;
+    --gold: #FFB627;
+  }
+
+  html { scroll-behavior: smooth; }
+  body{
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.55;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, h5 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+  }
+  .serif { font-family: 'Fraunces', serif; font-weight: 400; font-style: italic; }
+  .mono { font-family: 'JetBrains Mono', monospace; letter-spacing: 0.05em; }
+
+  button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+  a { color: inherit; text-decoration: none; }
+
+  .container { max-width: 1320px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 2; }
+  section { position: relative; padding: 100px 0; overflow: hidden; }
+
+  /* ===== NAVBAR ===== */
+  .topnav{
+    position: sticky; top: 0; z-index: 100;
+    background: var(--ink);
+    color: var(--cream);
+    border-bottom: 3px solid var(--ink);
+  }
+  .topnav-inner{
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 32px;
+    max-width: 1320px; margin: 0 auto;
+  }
+  .brand {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .brand-dot {
+    width: 14px; height: 14px;
+    background: var(--pink);
+    border-radius: 50%;
+    display: inline-block;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); background: var(--pink); }
+    50% { transform: scale(1.3); background: var(--teal); }
+  }
+  .nav-links { display: flex; gap: 4px; flex-wrap: wrap; }
+  .nav-links a {
+    font-size: 0.74rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 8px 12px;
+    border-radius: 999px;
+    transition: all 0.2s;
+    font-weight: 500;
+  }
+  .nav-links a:hover { background: var(--pink); color: var(--cream); }
+  @media (max-width: 1100px){ .nav-links { display: none; } }
+
+  /* ===== HERO ===== */
+  .hero {
+    padding: 80px 0 100px;
+    background:
+      radial-gradient(circle at 15% 20%, rgba(255,61,127,0.18), transparent 45%),
+      radial-gradient(circle at 85% 30%, rgba(0,187,167,0.16), transparent 45%),
+      radial-gradient(circle at 50% 90%, rgba(108,92,231,0.14), transparent 50%),
+      var(--cream);
+    border-bottom: 3px solid var(--ink);
+  }
+  .hero-meta-row{
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 50px;
+    flex-wrap: wrap; gap: 16px;
+  }
+  .pill {
+    display: inline-block;
+    padding: 8px 18px;
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: var(--cream);
+  }
+  .pill.pink { background: var(--pink); color: var(--cream); border-color: var(--pink); }
+  .pill.teal { background: var(--teal); color: var(--cream); border-color: var(--teal); }
+
+  .hero-title{
+    font-size: clamp(2.6rem, 9vw, 9rem);
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: -0.045em;
+    margin: 20px 0 30px;
+  }
+  .marker{
+    padding: 0 14px;
+    display: inline-block;
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+  .marker.pink { background: var(--pink); color: var(--cream); transform: rotate(-1.5deg); }
+  .marker.teal { background: var(--teal); color: var(--cream); transform: rotate(1deg); }
+  .marker.orange { background: var(--orange); transform: rotate(-1deg); }
+  .marker.purple { background: var(--purple); color: var(--cream); transform: rotate(1.5deg); }
+  .marker.lime { background: var(--lime); transform: rotate(-1deg); }
+  .marker.gold { background: var(--gold); transform: rotate(1deg); }
+
+  .hero-lead{
+    max-width: 800px;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--ink-soft);
+    margin-bottom: 60px;
+  }
+
+  .hero-stats{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+  }
+  .hero-stat{
+    padding: 28px 24px;
+    border: 3px solid var(--ink);
+    border-radius: 18px;
+    transition: transform 0.3s;
+    position: relative;
+  }
+  .hero-stat:hover { transform: translate(-4px, -4px); box-shadow: 8px 8px 0 var(--ink); }
+  .hero-stat:nth-child(1) { background: var(--pink); color: var(--cream); }
+  .hero-stat:nth-child(2) { background: var(--teal); color: var(--cream); }
+  .hero-stat:nth-child(3) { background: var(--orange); }
+  .hero-stat:nth-child(4) { background: var(--lime); }
+  .hero-stat-num{
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 4rem;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+  .hero-stat-label{
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-top: 14px;
+    font-weight: 600;
+  }
+  @media (max-width: 800px){ .hero-stats { grid-template-columns: repeat(2, 1fr); }}
+
+  /* ===== SECTION COMMON ===== */
+  .section-head{
+    margin-bottom: 60px;
+    max-width: 940px;
+  }
+  .section-title{
+    font-size: clamp(2.2rem, 6vw, 5rem);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    margin-top: 20px;
+  }
+  .section-title .u-pink { background: var(--pink); color: var(--cream); padding: 0 8px; box-decoration-break: clone; }
+  .section-title .u-teal { background: var(--teal); color: var(--cream); padding: 0 8px; }
+  .section-title .u-orange { background: var(--orange); padding: 0 8px; }
+  .section-title .u-purple { background: var(--purple); color: var(--cream); padding: 0 8px; }
+  .section-title .u-lime { background: var(--lime); padding: 0 8px; }
+  .section-title .u-gold { background: var(--gold); padding: 0 8px; }
+  .section-num{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+
+  @keyframes rise { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .reveal{ opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1); }
+  .reveal.in{ opacity: 1; transform: translateY(0); }
+
+  /* ===== §01 PROCESO ===== */
+  .sec-proceso{
+    background: var(--pink);
+    color: var(--cream);
+    border-bottom: 3px solid var(--ink);
+  }
+  .sec-proceso .section-num{ color: var(--gold); }
+
+  .proceso-steps{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 50px;
+  }
+  .proceso-step{
+    background: var(--cream);
+    color: var(--ink);
+    border: 3px solid var(--ink);
+    border-radius: 24px;
+    padding: 36px 30px;
+    position: relative;
+    box-shadow: 10px 10px 0 var(--ink);
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+  .proceso-step:hover{ transform: translate(-4px, -4px); box-shadow: 14px 14px 0 var(--ink); }
+  .proceso-step:nth-child(1){ background: var(--gold); }
+  .proceso-step:nth-child(2){ background: var(--teal); color: var(--cream); }
+  .proceso-step:nth-child(3){ background: var(--purple); color: var(--cream); }
+  .proceso-step-num{
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 4rem;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 14px;
+  }
+  .proceso-step h3{ font-size: 2rem; margin-bottom: 14px; }
+  .proceso-step p{ font-size: 1rem; line-height: 1.45; font-weight: 500; }
+  .proceso-arrow{
+    position: absolute;
+    right: -28px; top: 50%;
+    transform: translateY(-50%);
+    width: 40px; height: 40px;
+    background: var(--ink);
+    color: var(--cream);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800;
+    z-index: 3;
+  }
+  .proceso-step:last-child .proceso-arrow{ display: none; }
+  @media (max-width: 800px){ .proceso-steps { grid-template-columns: 1fr; } .proceso-arrow { display: none !important; } }
+
+  .proceso-warning{
+    margin-top: 40px;
+    padding: 20px 26px;
+    background: var(--ink);
+    color: var(--cream);
+    border-radius: 16px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    border-left: 6px solid var(--gold);
+  }
+
+  /* ===== §02 CAMINOS ===== */
+  .sec-caminos{
+    background: var(--cream);
+    border-bottom: 3px solid var(--ink);
+  }
+  .caminos-toggle{
+    display: inline-flex;
+    background: var(--paper);
+    border: 3px solid var(--ink);
+    border-radius: 999px;
+    padding: 4px;
+    margin-bottom: 40px;
+  }
+  .caminos-tab{
+    padding: 12px 28px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    transition: all 0.25s;
+    font-family: 'Bricolage Grotesque', sans-serif;
+  }
+  .caminos-tab[data-active="true"]{
+    background: var(--ink);
+    color: var(--cream);
+  }
+  .caminos-pane { display: none; }
+  .caminos-pane[data-active="true"]{ display: block; animation: rise 0.5s ease; }
+
+  .caminos-flow{
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    gap: 14px;
+    margin-bottom: 30px;
+  }
+  .caminos-flow-step{
+    padding: 22px 18px;
+    border: 3px solid var(--ink);
+    border-radius: 16px;
+    background: var(--paper);
+    position: relative;
+    text-align: center;
+  }
+  .caminos-flow-step.start{ background: var(--orange); }
+  .caminos-flow-step.middle{ background: var(--pink); color: var(--cream); }
+  .caminos-flow-step.mid2{ background: var(--teal); color: var(--cream); }
+  .caminos-flow-step.end{ background: var(--purple); color: var(--cream); }
+  .caminos-flow-step.warn{ background: var(--ink); color: var(--cream); border-color: var(--gold); border-width: 4px; }
+  .caminos-flow-step .step-n{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    opacity: 0.7;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .caminos-flow-step h5{
+    font-size: 0.95rem;
+    line-height: 1.15;
+  }
+  .caminos-flow-step::after{
+    content: "→";
+    position: absolute;
+    right: -16px; top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--ink);
+    z-index: 3;
+  }
+  .caminos-flow-step:last-child::after{ display: none; }
+  @media (max-width: 900px){
+    .caminos-flow { grid-auto-flow: row; grid-auto-columns: auto; }
+    .caminos-flow-step::after { content: "↓"; right: 50%; top: auto; bottom: -22px; transform: translateX(50%); }
+  }
+  .caminos-note{
+    padding: 22px;
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    border-radius: 16px;
+    font-size: 1rem;
+  }
+  .caminos-note strong { background: var(--gold); padding: 0 4px; }
+
+  /* ===== §03 FUNDAMENTOS + IMPORTANCIA ===== */
+  .sec-fundamentos{
+    background: var(--teal);
+    color: var(--cream);
+    border-bottom: 3px solid var(--ink);
+  }
+  .sec-fundamentos .section-num{ color: var(--gold); }
+
+  .fundamentos-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 60px;
+  }
+  .fundamentos-card{
+    background: var(--cream);
+    color: var(--ink);
+    border: 3px solid var(--ink);
+    border-radius: 20px;
+    padding: 36px 30px;
+    box-shadow: 8px 8px 0 var(--ink);
+    transition: all 0.3s;
+  }
+  .fundamentos-card:hover{ transform: translate(-4px, -4px); box-shadow: 12px 12px 0 var(--ink); }
+  .fundamentos-icon{
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 2.5rem;
+    width: 70px; height: 70px;
+    background: var(--ink);
+    color: var(--cream);
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px;
+    font-weight: 800;
+  }
+  .fundamentos-card h4{ font-size: 1.5rem; margin-bottom: 10px; }
+  .fundamentos-card p{ font-size: 1rem; color: var(--ink-soft); font-weight: 500; }
+  @media (max-width: 800px){ .fundamentos-grid { grid-template-columns: 1fr; }}
+
+  .question-callout{
+    display: inline-block;
+    padding: 14px 26px;
+    background: var(--gold);
+    color: var(--ink);
+    border: 3px solid var(--ink);
+    border-radius: 999px;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    transform: rotate(-2deg);
+    box-shadow: 6px 6px 0 var(--ink);
+    margin-bottom: 60px;
+  }
+
+  /* Why important - 4 reasons */
+  .importance-grid{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-top: 40px;
+  }
+  .importance-card{
+    background: var(--cream);
+    color: var(--ink);
+    border: 3px solid var(--ink);
+    border-radius: 20px;
+    padding: 30px 24px;
+    transition: all 0.3s;
+    min-height: 280px;
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+  .importance-card:hover{ transform: translate(-4px, -4px); box-shadow: 10px 10px 0 var(--ink); }
+  .importance-card:nth-child(1){ background: var(--orange); }
+  .importance-card:nth-child(2){ background: var(--pink); color: var(--cream); }
+  .importance-card:nth-child(3){ background: var(--purple); color: var(--cream); }
+  .importance-card:nth-child(4){ background: var(--lime); }
+  .importance-card .num{
+    display: inline-block;
+    padding: 4px 10px;
+    background: var(--ink);
+    color: var(--cream);
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  .importance-card h4{ font-size: 1.4rem; margin-bottom: 14px; }
+  .importance-card .tagline{
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    margin-bottom: 14px;
+    opacity: 0.85;
+  }
+  .importance-card ul{ list-style: none; }
+  .importance-card ul li{
+    font-size: 0.88rem;
+    padding: 8px 0 8px 18px;
+    position: relative;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+  .importance-card ul li::before{
+    content: "▸";
+    position: absolute; left: 0; font-weight: 700;
+  }
+  @media (max-width: 900px){ .importance-grid { grid-template-columns: repeat(2, 1fr); }}
+  @media (max-width: 500px){ .importance-grid { grid-template-columns: 1fr; }}
+
+  /* ===== §04 RECLUTAMIENTO DEF ===== */
+  .sec-reclutamiento{
+    background: var(--orange);
+    border-bottom: 3px solid var(--ink);
+  }
+  .sec-reclutamiento .section-num{ color: var(--purple-deep); }
+
+  .def-big{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+  .def-big-text{
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: clamp(1.4rem, 3vw, 2.2rem);
+    line-height: 1.15;
+    font-weight: 600;
+  }
+  .def-big-text strong { background: var(--ink); color: var(--cream); padding: 0 8px; font-weight: 800; }
+  .def-illust{
+    background: var(--ink);
+    color: var(--cream);
+    border-radius: 24px;
+    padding: 50px 40px;
+    box-shadow: 10px 10px 0 var(--purple);
+    transform: rotate(1deg);
+  }
+  .def-illust-label{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .def-illust-text{
+    font-family: 'Fraunces', serif;
+    font-size: 1.25rem;
+    line-height: 1.4;
+    font-style: italic;
+  }
+  @media (max-width: 800px){ .def-big { grid-template-columns: 1fr; gap: 30px; }}
+
+  /* ===== §05 FUENTES INTERNAS VS EXTERNAS ===== */
+  .sec-fuentes{
+    background: var(--cream);
+    border-bottom: 3px solid var(--ink);
+  }
+  .fuentes-toggle{
+    display: inline-flex;
+    background: var(--paper);
+    border: 3px solid var(--ink);
+    border-radius: 999px;
+    padding: 4px;
+    margin-bottom: 40px;
+  }
+  .fuentes-tab{
+    padding: 14px 28px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: all 0.25s;
+    font-family: 'Bricolage Grotesque', sans-serif;
+  }
+  .fuentes-tab[data-tab="internas"][data-active="true"]{ background: var(--teal); color: var(--cream); }
+  .fuentes-tab[data-tab="externas"][data-active="true"]{ background: var(--purple); color: var(--cream); }
+
+  .fuentes-pane { display: none; }
+  .fuentes-pane[data-active="true"]{ display: grid; grid-template-columns: 1fr 1fr; gap: 24px; animation: rise 0.4s ease; }
+  @media (max-width: 900px){ .fuentes-pane[data-active="true"]{ grid-template-columns: 1fr; }}
+
+  .fuentes-tipos{
+    grid-column: 1 / -1;
+    background: var(--paper);
+    border: 3px solid var(--ink);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 20px;
+  }
+  .fuentes-tipos h4{
+    font-size: 1rem;
+    font-family: 'JetBrains Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+    font-weight: 700;
+  }
+  .tipos-badges{
+    display: flex; flex-wrap: wrap; gap: 10px;
+  }
+  .tipo-badge{
+    padding: 10px 18px;
+    background: var(--ink);
+    color: var(--cream);
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.92rem;
+    transition: transform 0.2s;
+  }
+  .tipo-badge:hover{ transform: translateY(-3px); }
+  .tipo-badge.t-pink{ background: var(--pink); }
+  .tipo-badge.t-teal{ background: var(--teal); }
+  .tipo-badge.t-orange{ background: var(--orange); color: var(--ink); }
+  .tipo-badge.t-purple{ background: var(--purple); }
+  .tipo-badge.t-lime{ background: var(--lime); color: var(--ink); }
+  .tipo-badge.t-gold{ background: var(--gold); color: var(--ink); }
+
+  .fuentes-card{
+    border: 3px solid var(--ink);
+    border-radius: 20px;
+    padding: 32px;
+    box-shadow: 8px 8px 0 var(--ink);
+  }
+  .fuentes-card.ventajas{ background: var(--lime); }
+  .fuentes-card.desventajas{ background: var(--pink); color: var(--cream); }
+  .fuentes-card .label{
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--cream);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    margin-bottom: 16px;
+  }
+  .fuentes-card.desventajas .label{ background: var(--cream); color: var(--ink); }
+  .fuentes-card h3{ font-size: 1.8rem; margin-bottom: 18px; }
+  .fuentes-card ul{ list-style: none; }
+  .fuentes-card ul li{
+    padding: 12px 0 12px 32px;
+    border-top: 2px solid currentColor;
+    font-size: 1rem;
+    font-weight: 500;
+    position: relative;
+  }
+  .fuentes-card.ventajas ul li::before{
+    content: "✓";
+    position: absolute; left: 0; top: 11px;
+    background: var(--ink);
+    color: var(--lime);
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800;
+    font-size: 0.85rem;
+  }
+  .fuentes-card.desventajas ul li::before{
+    content: "✕";
+    position: absolute; left: 0; top: 11px;
+    background: var(--cream);
+    color: var(--pink);
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800;
+    font-size: 0.85rem;
+  }
+
+  /* ===== §06 MEJOR MÉTODO ===== */
+  .sec-mejor{
+    background: var(--purple);
+    color: var(--cream);
+    border-bottom: 3px solid var(--ink);
+  }
+  .sec-mejor .section-num{ color: var(--gold); }
+  .mejor-wrap{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: center;
+  }
+  .mejor-visual{
+    background: var(--cream);
+    color: var(--ink);
+    border: 3px solid var(--ink);
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 10px 10px 0 var(--gold);
+  }
+  .scale-row{
+    display: flex; align-items: center; gap: 16px; margin: 20px 0;
+  }
+  .scale-bar{
+    flex: 1;
+    height: 38px;
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+    overflow: hidden;
+    position: relative;
+  }
+  .scale-fill{
+    height: 100%;
+    border-radius: 999px;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 14px;
+    color: var(--cream);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 700;
+    transition: width 1s ease;
+  }
+  .scale-label{
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    min-width: 110px;
+  }
+  .mejor-text h3{ font-size: 2.4rem; margin-bottom: 20px; }
+  .mejor-text p{ font-size: 1.15rem; margin-bottom: 16px; opacity: 0.95; }
+  .mejor-text p strong { background: var(--gold); color: var(--ink); padding: 0 6px; }
+  @media (max-width: 900px){ .mejor-wrap { grid-template-columns: 1fr; }}
+
+  /* ===== §07 TENDENCIAS ===== */
+  .sec-tendencias{
+    background: var(--cream);
+    border-bottom: 3px solid var(--ink);
+  }
+  .tendencias-grid{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+  }
+  .tendencia-card{
+    border: 3px solid var(--ink);
+    border-radius: 20px;
+    padding: 30px 22px;
+    transition: all 0.3s;
+    text-align: left;
+    min-height: 260px;
+    display: flex; flex-direction: column;
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+  .tendencia-card:hover{ transform: translate(-4px, -4px) rotate(-1deg); box-shadow: 10px 10px 0 var(--ink); }
+  .tendencia-card:nth-child(1){ background: var(--pink); color: var(--cream); }
+  .tendencia-card:nth-child(2){ background: var(--gold); }
+  .tendencia-card:nth-child(3){ background: var(--teal); color: var(--cream); }
+  .tendencia-card:nth-child(4){ background: var(--orange); }
+  .tendencia-card:nth-child(5){ background: var(--purple); color: var(--cream); }
+  .tendencia-emoji{
+    font-size: 2.5rem;
+    margin-bottom: 18px;
+    line-height: 1;
+  }
+  .tendencia-card h4{ font-size: 1.25rem; margin-bottom: 10px; }
+  .tendencia-card p{ font-size: 0.86rem; line-height: 1.4; font-weight: 500; }
+  @media (max-width: 1000px){ .tendencias-grid { grid-template-columns: repeat(3, 1fr); }}
+  @media (max-width: 600px){ .tendencias-grid { grid-template-columns: 1fr; }}
+
+  /* ===== §08 SELECCIÓN INTRO ===== */
+  .sec-seleccion{
+    background: var(--ink);
+    color: var(--cream);
+    border-bottom: 3px solid var(--ink);
+  }
+  .sec-seleccion .section-num{ color: var(--lime); }
+  .seleccion-duo{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: 50px;
+  }
+  .seleccion-card{
+    background: var(--cream);
+    color: var(--ink);
+    border-radius: 24px;
+    padding: 50px 40px;
+    border: 3px solid var(--cream);
+    transition: all 0.3s;
+    position: relative;
+  }
+  .seleccion-card:nth-child(1){ background: var(--lime); box-shadow: 12px 12px 0 var(--pink); }
+  .seleccion-card:nth-child(2){ background: var(--pink); color: var(--cream); box-shadow: 12px 12px 0 var(--lime); }
+  .seleccion-card .big-num{
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 7rem;
+    font-weight: 800;
+    line-height: 0.85;
+    opacity: 0.25;
+    position: absolute;
+    top: 20px; right: 30px;
+  }
+  .seleccion-card h3{ font-size: 2.2rem; margin-bottom: 20px; line-height: 1; position: relative; }
+  .seleccion-card p{ font-size: 1.1rem; position: relative; line-height: 1.55; }
+  @media (max-width: 800px){ .seleccion-duo { grid-template-columns: 1fr; }}
+
+  /* ===== §09 PREDICTORES ===== */
+  .sec-predictores{
+    background: var(--cream);
+    border-bottom: 3px solid var(--ink);
+  }
+  .pred-intro{
+    padding: 28px;
+    background: var(--gold);
+    border: 3px solid var(--ink);
+    border-radius: 18px;
+    font-size: 1.2rem;
+    margin-bottom: 50px;
+    box-shadow: 8px 8px 0 var(--ink);
+  }
+  .pred-intro strong { background: var(--ink); color: var(--cream); padding: 0 6px; }
+
+  .pred-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .pred-card{
+    border: 3px solid var(--ink);
+    border-radius: 22px;
+    padding: 36px 30px;
+    box-shadow: 8px 8px 0 var(--ink);
+    transition: all 0.3s;
+  }
+  .pred-card:hover{ transform: translate(-4px, -4px); box-shadow: 12px 12px 0 var(--ink); }
+  .pred-card:nth-child(1){ background: var(--pink); color: var(--cream); }
+  .pred-card:nth-child(2){ background: var(--teal); color: var(--cream); }
+  .pred-card:nth-child(3){ background: var(--purple); color: var(--cream); }
+  .pred-card .label{
+    display: inline-block;
+    padding: 6px 12px;
+    background: var(--ink);
+    color: var(--cream);
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    margin-bottom: 16px;
+  }
+  .pred-card h3{ font-size: 1.8rem; margin-bottom: 24px; line-height: 1; }
+  .pred-card ul{ list-style: none; }
+  .pred-card ul li{
+    padding: 12px 0 12px 32px;
+    border-top: 2px solid rgba(255,255,255,0.35);
+    font-size: 0.98rem;
+    font-weight: 500;
+    position: relative;
+  }
+  .pred-card ul li::before{
+    content: "→";
+    position: absolute; left: 0;
+    font-weight: 800;
+  }
+  @media (max-width: 900px){ .pred-grid { grid-template-columns: 1fr; }}
+
+  /* ===== §10 FASES DEL PROCESO DE SELECCIÓN ===== */
+  .sec-fases{
+    background: var(--lime);
+    border-bottom: 3px solid var(--ink);
+  }
+  .sec-fases .section-num{ color: var(--pink-deep); }
+
+  .fases-flow{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+    margin: 40px 0;
+  }
+  .fase-step{
+    background: var(--cream);
+    border: 3px solid var(--ink);
+    border-radius: 16px;
+    padding: 20px 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    min-height: 130px;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .fase-step:hover{ transform: translate(-3px, -3px); box-shadow: 6px 6px 0 var(--ink); }
+  .fase-step[data-active="true"]{
+    background: var(--ink);
+    color: var(--cream);
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--pink);
+  }
+  .fase-num{
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--pink);
+  }
+  .fase-step[data-active="true"] .fase-num{ color: var(--gold); }
+  .fase-step h5{
+    font-size: 0.92rem;
+    line-height: 1.2;
+    font-weight: 700;
+  }
+  @media (max-width: 900px){ .fases-flow { grid-template-columns: repeat(2, 1fr); }}
+  @media (max-width: 500px){ .fases-flow { grid-template-columns: 1fr; }}
+
+  .fases-detail{
+    background: var(--paper);
+    border: 3px solid var(--ink);
+    border-radius: 20px;
+    padding: 36px;
+    box-shadow: 8px 8px 0 var(--ink);
+    min-height: 180px;
+  }
+  .fase-panel { display: none; }
+  .fase-panel[data-active="true"]{ display: block; animation: rise 0.4s ease; }
+  .fase-panel .panel-num{
+    display: inline-block;
+    padding: 5px 12px;
+    background: var(--pink);
+    color: var(--cream);
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+  .fase-panel h4{ font-size: 1.8rem; margin-bottom: 12px; }
+  .fase-panel p{ font-size: 1.05rem; color: var(--ink-soft); line-height: 1.55; }
+
+  /* ===== §11 TOMA DE DECISIONES ===== */
+  .sec-decisiones{
+    background: var(--cream);
+    border-bottom: 3px solid var(--ink);
+  }
+  .decisiones-wrap{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 30px;
+    margin-top: 40px;
+  }
+  .deci-single{
+    background: var(--lime);
+    border: 3px solid var(--ink);
+    border-radius: 24px;
+    padding: 36px;
+    box-shadow: 8px 8px 0 var(--ink);
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .deci-single h3{ font-size: 1.8rem; margin-bottom: 14px; line-height: 1.05; }
+  .deci-single .badge{
+    display: inline-block;
+    padding: 5px 12px;
+    background: var(--ink);
+    color: var(--cream);
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    margin-bottom: 14px;
+  }
+  .deci-single p{ font-size: 1rem; font-weight: 500; }
+
+  .deci-multi{
+    background: var(--orange);
+    border: 3px solid var(--ink);
+    border-radius: 24px;
+    padding: 36px;
+    box-shadow: 8px 8px 0 var(--ink);
+  }
+  .deci-multi h3{ font-size: 1.8rem; margin-bottom: 14px; line-height: 1.05; }
+  .deci-multi .badge{
+    display: inline-block;
+    padding: 5px 12px;
+    background: var(--ink);
+    color: var(--cream);
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    margin-bottom: 14px;
+  }
+  .deci-multi-list{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 20px;
+  }
+  .deci-item{
+    padding: 18px;
+    background: var(--cream);
+    border: 2px solid var(--ink);
+    border-radius: 12px;
+  }
+  .deci-item h5{ font-size: 1.05rem; margin-bottom: 6px; }
+  .deci-item p{ font-size: 0.88rem; color: var(--ink-soft); font-weight: 500; }
+  .deci-item ul{ list-style: none; margin-top: 8px; }
+  .deci-item ul li{ font-size: 0.85rem; padding: 4px 0 4px 18px; position: relative; font-weight: 500; }
+  .deci-item ul li::before{ content: "•"; position: absolute; left: 0; color: var(--pink); font-weight: 800; }
+  @media (max-width: 900px){ .decisiones-wrap, .deci-multi-list { grid-template-columns: 1fr; }}
+
+  /* ===== §12 CARACTERÍSTICAS PREDICTORES ===== */
+  .sec-caract{
+    background: var(--orange);
+    border-bottom: 3px solid var(--ink);
+  }
+  .sec-caract .section-num{ color: var(--purple-deep); }
+  .caract-defs{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 50px;
+  }
+  .caract-def{
+    background: var(--cream);
+    border: 3px solid var(--ink);
+    border-radius: 22px;
+    padding: 36px;
+    box-shadow: 8px 8px 0 var(--ink);
+  }
+  .caract-def.right{ background: var(--purple); color: var(--cream); }
+  .caract-def .big-letter{
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 6rem;
+    font-weight: 800;
+    line-height: 0.85;
+    color: var(--pink);
+    margin-bottom: 10px;
+  }
+  .caract-def.right .big-letter{ color: var(--gold); }
+  .caract-def h3{ font-size: 2rem; margin-bottom: 14px; }
+  .caract-def .lead{ font-size: 1.1rem; margin-bottom: 20px; font-weight: 500; }
+  .caract-def ul{ list-style: none; }
+  .caract-def ul li{
+    padding: 14px 0 14px 30px;
+    border-top: 2px solid currentColor;
+    font-size: 0.96rem;
+    position: relative;
+  }
+  .caract-def ul li::before{
+    content: "▸";
+    position: absolute; left: 0; top: 13px;
+    font-weight: 800;
+  }
+  .caract-def ul li strong { font-weight: 700; }
+  @media (max-width: 800px){ .caract-defs { grid-template-columns: 1fr; }}
+
+  /* 4 dartboards */
+  .targets-row{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 30px;
+  }
+  .target-card{
+    background: var(--cream);
+    border: 3px solid var(--ink);
+    border-radius: 20px;
+    padding: 24px;
+    text-align: center;
+    box-shadow: 6px 6px 0 var(--ink);
+    transition: all 0.3s;
+  }
+  .target-card:hover{ transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--ink); }
+  .target-svg{ width: 100%; max-width: 130px; margin: 0 auto 16px; display: block; }
+  .target-status{
+    display: flex; flex-direction: column; gap: 4px;
+    margin-top: 12px;
+  }
+  .target-tag{
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    border: 2px solid var(--ink);
+  }
+  .target-tag.yes{ background: var(--lime); color: var(--ink); }
+  .target-tag.no{ background: var(--ink); color: var(--cream); }
+  .target-tag.maybe{ background: var(--gold); color: var(--ink); }
+  @media (max-width: 900px){ .targets-row { grid-template-columns: repeat(2, 1fr); }}
+
+  /* ===== §13 INSTRUMENTOS ===== */
+  .sec-instrumentos{
+    background: var(--cream);
+    border-bottom: 3px solid var(--ink);
+  }
+  .instr-grid{
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 14px;
+    margin-top: 30px;
+  }
+  .instr-card{
+    background: var(--paper);
+    border: 3px solid var(--ink);
+    border-radius: 16px;
+    padding: 24px 18px;
+    text-align: center;
+    transition: all 0.3s;
+    box-shadow: 5px 5px 0 var(--ink);
+    cursor: pointer;
+  }
+  .instr-card:hover{ transform: translate(-3px, -3px); box-shadow: 8px 8px 0 var(--ink); }
+  .instr-card:nth-child(1){ background: var(--pink); color: var(--cream); }
+  .instr-card:nth-child(2){ background: var(--teal); color: var(--cream); }
+  .instr-card:nth-child(3){ background: var(--orange); }
+  .instr-card:nth-child(4){ background: var(--purple); color: var(--cream); }
+  .instr-card:nth-child(5){ background: var(--lime); }
+  .instr-card:nth-child(6){ background: var(--gold); }
+  .instr-emoji{ font-size: 2.2rem; margin-bottom: 12px; line-height: 1; }
+  .instr-card h5{ font-size: 0.98rem; line-height: 1.2; }
+  @media (max-width: 1000px){ .instr-grid { grid-template-columns: repeat(3, 1fr); }}
+  @media (max-width: 600px){ .instr-grid { grid-template-columns: repeat(2, 1fr); }}
+
+  /* ===== §14 ENTREVISTA ===== */
+  .sec-entrevista{
+    background: var(--ink);
+    color: var(--cream);
+    border-bottom: 3px solid var(--ink);
+  }
+  .sec-entrevista .section-num{ color: var(--gold); }
+
+  .ent-intro{
+    background: var(--pink);
+    color: var(--cream);
+    border: 3px solid var(--cream);
+    border-radius: 20px;
+    padding: 36px 40px;
+    margin-bottom: 40px;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.2;
+    box-shadow: 10px 10px 0 var(--lime);
+  }
+  .ent-intro .big{ font-size: 2.2rem; color: var(--gold); }
+
+  .ent-section-h{
+    font-size: 1.5rem;
+    margin: 50px 0 20px;
+    color: var(--cream);
+  }
+
+  /* Objectives 3 */
+  .ent-obj-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 50px;
+  }
+  .ent-obj{
+    padding: 26px;
+    background: var(--cream);
+    color: var(--ink);
+    border: 3px solid var(--cream);
+    border-radius: 18px;
+    box-shadow: 6px 6px 0 var(--gold);
+  }
+  .ent-obj:nth-child(2){ background: var(--lime); }
+  .ent-obj:nth-child(3){ background: var(--teal); color: var(--cream); border-color: var(--teal); }
+  .ent-obj .obj-num{
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+  .ent-obj h4{ font-size: 1.15rem; line-height: 1.3; }
+  @media (max-width: 800px){ .ent-obj-grid { grid-template-columns: 1fr; }}
+
+  /* Types of interview */
+  .ent-types{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+  }
+  .ent-type{
+    background: var(--paper);
+    color: var(--ink);
+    border: 3px solid var(--paper);
+    border-radius: 14px;
+    padding: 20px 16px;
+    text-align: center;
+    box-shadow: 5px 5px 0 var(--pink);
+    transition: all 0.3s;
+    cursor: default;
+  }
+  .ent-type:hover{ transform: translate(-3px, -3px); box-shadow: 8px 8px 0 var(--pink); }
+  .ent-type:nth-child(2){ box-shadow: 5px 5px 0 var(--teal); }
+  .ent-type:nth-child(2):hover{ box-shadow: 8px 8px 0 var(--teal); }
+  .ent-type:nth-child(3){ box-shadow: 5px 5px 0 var(--orange); }
+  .ent-type:nth-child(3):hover{ box-shadow: 8px 8px 0 var(--orange); }
+  .ent-type:nth-child(4){ box-shadow: 5px 5px 0 var(--purple); }
+  .ent-type:nth-child(4):hover{ box-shadow: 8px 8px 0 var(--purple); }
+  .ent-type:nth-child(5){ box-shadow: 5px 5px 0 var(--lime); }
+  .ent-type:nth-child(5):hover{ box-shadow: 8px 8px 0 var(--lime); }
+  .ent-type h5{ font-size: 1rem; line-height: 1.2; }
+  .ent-type .ent-type-num{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--pink);
+    margin-bottom: 8px;
+  }
+  @media (max-width: 900px){ .ent-types { grid-template-columns: repeat(2, 1fr); }}
+
+  /* ===== §15 ERRORES ===== */
+  .sec-errores{
+    background: var(--purple);
+    color: var(--cream);
+    border-bottom: 3px solid var(--ink);
+  }
+  .sec-errores .section-num{ color: var(--lime); }
+
+  .errores-list{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-bottom: 50px;
+  }
+  .error-cause{
+    background: var(--cream);
+    color: var(--ink);
+    border: 3px solid var(--cream);
+    border-radius: 16px;
+    padding: 22px 26px;
+    box-shadow: 6px 6px 0 var(--pink);
+    transition: transform 0.2s;
+  }
+  .error-cause:hover{ transform: translateY(-3px); }
+  .error-cause .err-num{
+    display: inline-block;
+    padding: 4px 10px;
+    background: var(--pink);
+    color: var(--cream);
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .error-cause h5{ font-size: 1.1rem; line-height: 1.2; }
+  @media (max-width: 700px){ .errores-list { grid-template-columns: 1fr; }}
+
+  .efectos-section-title{
+    font-size: 2rem;
+    margin: 60px 0 30px;
+  }
+  .efectos-grid{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  .efecto-card{
+    background: var(--cream);
+    color: var(--ink);
+    border: 3px solid var(--cream);
+    border-radius: 20px;
+    padding: 30px 24px;
+    box-shadow: 8px 8px 0 var(--gold);
+    transition: all 0.3s;
+    min-height: 220px;
+    cursor: pointer;
+  }
+  .efecto-card:hover{ transform: translate(-4px, -4px) rotate(-1deg); box-shadow: 12px 12px 0 var(--gold); }
+  .efecto-card:nth-child(2){ background: var(--lime); box-shadow: 8px 8px 0 var(--pink); }
+  .efecto-card:nth-child(2):hover{ box-shadow: 12px 12px 0 var(--pink); }
+  .efecto-card:nth-child(3){ background: var(--orange); box-shadow: 8px 8px 0 var(--teal); }
+  .efecto-card:nth-child(3):hover{ box-shadow: 12px 12px 0 var(--teal); }
+  .efecto-card:nth-child(4){ background: var(--pink); color: var(--cream); border-color: var(--pink); box-shadow: 8px 8px 0 var(--lime); }
+  .efecto-card:nth-child(4):hover{ box-shadow: 12px 12px 0 var(--lime); }
+  .efecto-icon{
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+  .efecto-card h4{ font-size: 1.5rem; margin-bottom: 12px; }
+  .efecto-card p{ font-size: 0.95rem; font-weight: 500; line-height: 1.4; }
+  @media (max-width: 900px){ .efectos-grid { grid-template-columns: repeat(2, 1fr); }}
+  @media (max-width: 500px){ .efectos-grid { grid-template-columns: 1fr; }}
+
+  /* ===== §16 ON BOARDING ===== */
+  .sec-onboarding{
+    background: var(--teal);
+    color: var(--cream);
+    border-bottom: 3px solid var(--ink);
+  }
+  .sec-onboarding .section-num{ color: var(--gold); }
+
+  .onb-def{
+    background: var(--cream);
+    color: var(--ink);
+    border: 3px solid var(--ink);
+    border-radius: 24px;
+    padding: 36px 40px;
+    margin-bottom: 50px;
+    box-shadow: 10px 10px 0 var(--ink);
+  }
+  .onb-def h3{ font-size: 2rem; margin-bottom: 14px; }
+  .onb-def p{ font-size: 1.1rem; color: var(--ink-soft); line-height: 1.55; margin-bottom: 10px; }
+  .onb-def p strong { background: var(--gold); padding: 0 6px; }
+  .onb-def .arrow-label{
+    margin-top: 16px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--pink-deep);
+  }
+
+  /* Objectives */
+  .onb-objs{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 60px;
+  }
+  .onb-obj{
+    background: var(--cream);
+    color: var(--ink);
+    border: 3px solid var(--cream);
+    border-radius: 20px;
+    padding: 30px 24px;
+    box-shadow: 8px 8px 0 var(--ink);
+    transition: transform 0.3s;
+  }
+  .onb-obj:hover{ transform: translate(-3px, -3px); box-shadow: 12px 12px 0 var(--ink); }
+  .onb-obj:nth-child(1){ background: var(--lime); }
+  .onb-obj:nth-child(2){ background: var(--pink); color: var(--cream); }
+  .onb-obj:nth-child(3){ background: var(--gold); }
+  .onb-obj:nth-child(4){ background: var(--purple); color: var(--cream); }
+  .onb-obj .obj-n{
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 2.8rem;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+  .onb-obj h5{ font-size: 1.1rem; line-height: 1.3; }
+  @media (max-width: 900px){ .onb-objs { grid-template-columns: repeat(2, 1fr); }}
+  @media (max-width: 500px){ .onb-objs { grid-template-columns: 1fr; }}
+
+  /* Info común */
+  .info-title{
+    font-size: 2rem;
+    color: var(--cream);
+    margin-bottom: 30px;
+  }
+  .info-grid{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+  }
+  .info-block{
+    background: var(--cream);
+    color: var(--ink);
+    border: 3px solid var(--cream);
+    border-radius: 18px;
+    padding: 26px 22px;
+    box-shadow: 6px 6px 0 var(--ink);
+    transition: transform 0.3s;
+  }
+  .info-block:hover{ transform: translateY(-4px); }
+  .info-block:nth-child(2){ background: var(--gold); }
+  .info-block:nth-child(3){ background: var(--orange); }
+  .info-block:nth-child(4){ background: var(--purple); color: var(--cream); border-color: var(--purple); }
+  .info-block:nth-child(5){ background: var(--lime); }
+  .info-block .info-label{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    margin-bottom: 10px;
+    opacity: 0.85;
+  }
+  .info-block h5{ font-size: 1.1rem; margin-bottom: 10px; line-height: 1.2; }
+  .info-block p{ font-size: 0.85rem; line-height: 1.4; font-weight: 500; }
+  @media (max-width: 1000px){ .info-grid { grid-template-columns: repeat(2, 1fr); }}
+  @media (max-width: 500px){ .info-grid { grid-template-columns: 1fr; }}
+
+  /* ===== FOOTER ===== */
+  footer{
+    background: var(--ink);
+    color: var(--cream);
+    padding: 60px 0;
+  }
+  .footer-inner{
+    display: flex; justify-content: space-between; align-items: center; gap: 30px; flex-wrap: wrap;
+  }
+  .footer-brand{
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 800;
+  }
+  .footer-brand .dot{ display: inline-block; width: 12px; height: 12px; background: var(--pink); border-radius: 50%; margin-right: 10px; }
+  .footer-meta{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    opacity: 0.7;
+    text-align: right;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav class="topnav">
+  <div class="topnav-inner">
+    <div class="brand"><span class="brand-dot"></span> Tema 04</div>
+    <div class="nav-links">
+      <a href="#proceso">Proceso</a>
+      <a href="#caminos">Caminos</a>
+      <a href="#fundamentos">Fundamentos</a>
+      <a href="#reclutamiento">Reclutamiento</a>
+      <a href="#fuentes">Fuentes</a>
+      <a href="#tendencias">Tendencias</a>
+      <a href="#seleccion">Selección</a>
+      <a href="#fases">Fases</a>
+      <a href="#decisiones">Decisión</a>
+      <a href="#entrevista">Entrevista</a>
+      <a href="#onboarding">Onboarding</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-meta-row">
+      <span class="pill pink">Tema 04 — Recursos Humanos</span>
+      <span class="pill">Cloud Company · 2025</span>
+    </div>
+
+    <h1 class="hero-title">
+      <span class="marker pink">Reclutar</span>,<br/>
+      <span class="marker teal">seleccionar</span><br/>
+      <span class="serif">y</span> <span class="marker orange">acoger</span><br/>
+      al <span class="marker purple">talento</span>.
+    </h1>
+
+    <p class="hero-lead">
+      Cómo atraer a los mejores candidatos, cómo decidir entre ellos sin sesgarse, y cómo conseguir que el día 1 en la empresa no sea también el día 1 de su salida.
+    </p>
+
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">03</div>
+        <div class="hero-stat-label">Fases obligatorias</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">02</div>
+        <div class="hero-stat-label">Tipos de fuentes</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">10</div>
+        <div class="hero-stat-label">Fases de selección</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">04</div>
+        <div class="hero-stat-label">Errores clásicos</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ §01 PROCESO ============ -->
+<section id="proceso" class="sec-proceso">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-num">§ 01 — VISIÓN GENERAL</div>
+      <h2 class="section-title">El proceso de <span class="u-gold">contratación</span>.</h2>
+    </div>
+
+    <p class="reveal" style="font-size: 1.2rem; max-width: 760px; opacity: 0.95;">
+      Toda contratación se apoya en <strong style="background: var(--gold); color: var(--ink); padding: 0 6px;">tres fases obligatorias</strong>. Saltarse cualquiera de ellas pone en riesgo el éxito del proceso entero.
+    </p>
+
+    <div class="proceso-steps reveal">
+      <div class="proceso-step">
+        <div class="proceso-step-num">01</div>
+        <h3>Reclutamiento</h3>
+        <p>Atraer y localizar a candidatos potenciales para la compañía.</p>
+        <div class="proceso-arrow">→</div>
+      </div>
+      <div class="proceso-step">
+        <div class="proceso-step-num">02</div>
+        <h3>Selección</h3>
+        <p>Recopilar información de los candidatos y decidir a quién contratar.</p>
+        <div class="proceso-arrow">→</div>
+      </div>
+      <div class="proceso-step">
+        <div class="proceso-step-num">03</div>
+        <h3>On boarding</h3>
+        <p>Orientar al nuevo trabajador en la organización y en lo que se espera de él.</p>
+      </div>
+    </div>
+
+    <div class="proceso-warning reveal">
+      ⚠ El proceso debe cumplir con las 3 fases obligatoriamente para tener éxito.
+    </div>
+  </div>
+</section>
+
+<!-- ============ §02 CAMINOS ============ -->
+<section id="caminos" class="sec-caminos">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-num">§ 02 — ¿CÓMO LLEGAMOS AQUÍ?</div>
+      <h2 class="section-title">Dos <span class="u-pink">caminos</span> hacia la contratación.</h2>
+    </div>
+
+    <p class="reveal" style="font-size: 1.15rem; max-width: 760px; margin-bottom: 30px;">
+      Una contratación puede activarse de dos formas distintas. La diferencia entre una y otra son los <strong style="background: var(--gold); padding: 0 6px;">costes</strong> que implica para la organización.
+    </p>
+
+    <div class="reveal">
+      <div class="caminos-toggle">
+        <button class="caminos-tab" data-tab="A" data-active="true">Opción A · Planificada</button>
+        <button class="caminos-tab" data-tab="B">Opción B · Reactiva</button>
+      </div>
+
+      <div class="caminos-pane" data-tab="A" data-active="true">
+        <div class="caminos-flow">
+          <div class="caminos-flow-step start"><span class="step-n">01</span><h5>Análisis de puesto</h5></div>
+          <div class="caminos-flow-step middle"><span class="step-n">02</span><h5>Planificación plantilla</h5></div>
+          <div class="caminos-flow-step mid2"><span class="step-n">03</span><h5>Reclutamiento</h5></div>
+          <div class="caminos-flow-step end"><span class="step-n">04</span><h5>Selección</h5></div>
+          <div class="caminos-flow-step end" style="background:var(--gold); color:var(--ink);"><span class="step-n">05</span><h5>On Boarding</h5></div>
+        </div>
+        <div class="caminos-note">
+          ✅ Se parte de un <strong>análisis del puesto y una planificación de plantilla</strong>. Es la vía ideal: cuando contrato sé exactamente para qué, con qué perfil y cuándo lo necesito.
+        </div>
+      </div>
+
+      <div class="caminos-pane" data-tab="B">
+        <div class="caminos-flow">
+          <div class="caminos-flow-step warn"><span class="step-n">00</span><h5>Proceso de salida</h5></div>
+          <div class="caminos-flow-step mid2"><span class="step-n">01</span><h5>Reclutamiento</h5></div>
+          <div class="caminos-flow-step end"><span class="step-n">02</span><h5>Selección</h5></div>
+          <div class="caminos-flow-step end" style="background:var(--gold); color:var(--ink);"><span class="step-n">03</span><h5>On Boarding</h5></div>
+          <div class="caminos-flow-step middle"><span class="step-n">04</span><h5>Rendimiento</h5></div>
+        </div>
+        <div class="caminos-note">
+          ⚠ Se contrata porque <strong>alguien se ha ido</strong>. Es reactivo: implica costes adicionales (proceso de salida, hueco temporal, urgencia, pérdida de conocimiento) y suele forzar plazos.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ §03 FUNDAMENTOS ============ -->
+<section id="fundamentos" class="sec-fundamentos">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-num">§ 03 — RESULTA FUNDAMENTAL</div>
+      <h2 class="section-title">3 cosas <span class="u-gold">imprescindibles</span>.</h2>
+    </div>
+
+    <div class="fundamentos-grid">
+      <div class="fundamentos-card reveal">
+        <div class="fundamentos-icon">01</div>
+        <h4>Fichar a los mejores</h4>
+        <p>El proceso solo tiene sentido si trae a la organización personas que sumen valor real.</p>
+      </div>
+      <div class="fundamentos-card reveal">
+        <div class="fundamentos-icon">02</div>
+        <h4>Mantener a los mejores</h4>
+        <p>Atraer es solo la mitad: la otra mitad es conseguir que se queden y crezcan dentro.</p>
+      </div>
+      <div class="fundamentos-card reveal">
+        <div class="fundamentos-icon">03</div>
+        <h4>Involucrar a los responsables</h4>
+        <p>RR.HH. no contrata solo: los responsables de cada departamento deben implicarse.</p>
+      </div>
+    </div>
+
+    <div class="reveal" style="text-align: center;">
+      <div class="question-callout">¿Quiénes son los mejores?</div>
+    </div>
+
+    <h3 class="reveal" style="font-size: 2.5rem; margin-bottom: 14px; color: var(--cream);">¿Por qué es importante el reclutamiento?</h3>
+    <p class="reveal" style="font-size: 1.1rem; opacity: 0.95; margin-bottom: 10px;">
+      Pasa el cursor por cada tarjeta para ver el detalle de los 4 grandes beneficios.
+    </p>
+
+    <div class="importance-grid">
+      <div class="importance-card reveal">
+        <div class="num">01</div>
+        <h4>Optimiza</h4>
+        <div class="tagline">+ calidad, − cantidad</div>
+        <ul>
+          <li>Criba de candidatos potencialmente aptos</li>
+          <li>Identificados con los valores de la empresa</li>
+          <li>Ahorro de €€€</li>
+          <li>No buscar la aguja en el pajar</li>
+        </ul>
+      </div>
+      <div class="importance-card reveal">
+        <div class="num">02</div>
+        <h4>Imagen</h4>
+        <div class="tagline">Vende tu empresa</div>
+        <ul>
+          <li>Oportunidad para causar buena impresión</li>
+          <li>Refuerza la marca empleadora</li>
+          <li>Cada candidato es un embajador potencial</li>
+        </ul>
+      </div>
+      <div class="importance-card reveal">
+        <div class="num">03</div>
+        <h4>BBDD</h4>
+        <div class="tagline">Hoy no, pero ¿mañana?</div>
+        <ul>
+          <li>Crear base de datos de talento</li>
+          <li>Menos trabajo en el siguiente proceso</li>
+          <li>Menos coste a largo plazo</li>
+        </ul>
+      </div>
+      <div class="importance-card reveal">
+        <div class="num">04</div>
+        <h4>Ventaja</h4>
+        <div class="tagline">Competitiva</div>
+        <ul>
+          <li>Momento para hacer algo distinto a la competencia</li>
+          <li>Diferenciación en el mercado de talento</li>
+          <li>Posicionamiento como empresa atractiva</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ §04 RECLUTAMIENTO DEF ============ -->
+<section id="reclutamiento" class="sec-reclutamiento">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-num">§ 04 — DEFINICIÓN</div>
+      <h2 class="section-title">¿Qué es el <span class="u-purple">reclutamiento</span>?</h2>
+    </div>
+
+    <div class="def-big">
+      <div class="def-big-text reveal">
+        El reclutamiento es el <strong>conjunto de acciones</strong> que se realizan para <strong>atraer y/o localizar</strong> a candidatos potenciales para una compañía.
+      </div>
+      <div class="def-illust reveal">
+        <div class="def-illust-label">→ La clave</div>
+        <div class="def-illust-text">No se trata de tener muchos CVs encima de la mesa. Se trata de tener los <span style="color: var(--gold); font-style: normal; font-weight: 700;">correctos</span>.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ §05 FUENTES ============ -->
+<section id="fuentes" class="sec-fuentes">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-num">§ 05 — DE DÓNDE VIENEN</div>
+      <h2 class="section-title">Fuentes de <span class="u-teal">reclutamiento</span>.</h2>
+    </div>
+
+    <p class="reveal" style="font-size: 1.15rem; max-width: 720px; margin-bottom: 30px;">
+      Hay dos grandes fuentes para encontrar candidatos. Pulsa cada pestaña para ver sus tipos, ventajas e inconvenientes.
+    </p>
+
+    <div class="reveal">
+      <div class="fuentes-toggle">
+        <button class="fuentes-tab" data-tab="internas" data-active="true">→ Internas</button>
+        <button class="fuentes-tab" data-tab="externas">→ Externas</button>
+      </div>
+
+      <!-- INTERNAS -->
+      <div class="fuentes-pane" data-tab="internas" data-active="true">
+        <div class="fuentes-tipos">
+          <h4>→ ¿Cuáles son?</h4>
+          <div class="tipos-badges">
+            <span class="tipo-badge t-teal">Promoción interna</span>
+            <span class="tipo-badge t-pink">Movilidad horizontal</span>
+            <span class="tipo-badge t-orange">Referidos de empleados</span>
+            <span class="tipo-badge t-lime">Banco de talento interno</span>
+          </div>
+        </div>
+        <div class="fuentes-card ventajas">
+          <div class="label">→ Ventajas</div>
+          <h3>Lo bueno</h3>
+          <ul>
+            <li>Conocimiento mutuo: ya os conocéis</li>
+            <li>Motivación de la plantilla</li>
+            <li>Engagement: refuerza la pertenencia</li>
+            <li>Flexibilización de la plantilla</li>
+            <li>Versatilidad de los empleados</li>
+            <li>Reducción de costes</li>
+          </ul>
+        </div>
+        <div class="fuentes-card desventajas">
+          <div class="label">→ Inconvenientes</div>
+          <h3>Lo malo</h3>
+          <ul>
+            <li>¿Candidato 100% adecuado al nuevo puesto?</li>
+            <li>Conflicto de intereses entre áreas</li>
+            <li>Dificultad para universalizar la política</li>
+            <li>Riesgo de endogamia y falta de visión nueva</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- EXTERNAS -->
+      <div class="fuentes-pane" data-tab="externas">
+        <div class="fuentes-tipos">
+          <h4>→ ¿Cuáles son?</h4>
+          <div class="tipos-badges">
+            <span class="tipo-badge t-pink">Web corporativa</span>
+            <span class="tipo-badge t-teal">Redes sociales</span>
+            <span class="tipo-badge t-orange">Portales de empleo</span>
+            <span class="tipo-badge t-purple">Blog · vídeos</span>
+            <span class="tipo-badge t-lime">Eventos · ferias</span>
+            <span class="tipo-badge t-gold">Agencias</span>
+            <span class="tipo-badge t-pink">Bolsas de empleo</span>
+            <span class="tipo-badge t-teal">Headhunters</span>
+          </div>
+        </div>
+        <div class="fuentes-card ventajas">
+          <div class="label">→ Ventajas</div>
+          <h3>Lo bueno</h3>
+          <ul>
+            <li>Candidato, a priori, idóneo para el puesto</li>
+            <li>Innovación: trae lo de fuera</li>
+            <li>Nuevas visiones y formas de hacer</li>
+            <li>Beneficiarse de un candidato ya formado sin coste nuestro</li>
+          </ul>
+        </div>
+        <div class="fuentes-card desventajas">
+          <div class="label">→ Inconvenientes</div>
+          <h3>Lo malo</h3>
+          <ul>
+            <li>Coste económico mayor</li>
+            <li>Duración del proceso (más largo)</li>
+            <li>Desmotivación interna (¿por qué no yo?)</li>
+            <li>Curva de aprendizaje y adaptación a la cultura</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ §06 MEJOR MÉTODO ============ -->
+<section class="sec-mejor">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-num">§ 06 — LA GRAN PREGUNTA</div>
+      <h2 class="section-title">¿Cuál es el <span class="u-gold">mejor</span> método?</h2>
+    </div>
+
+    <div class="mejor-wrap">
+      <div class="mejor-text reveal">
+        <h3>Spoiler: no hay respuesta universal.</h3>
+        <p>Cada proceso debe analizarse de manera <strong>individual</strong>.</p>
+        <p>La decisión depende de comparar el <strong>coste del proceso</strong> con los <strong>beneficios</strong>: influencia, impacto y tiempo invertido.</p>
+        <p style="font-family: 'Fraunces', serif; font-style: italic; font-size: 1.4rem; margin-top: 30px;">No es el método más barato. Es el que mejor encaja.</p>
+      </div>
+      <div class="mejor-visual reveal">
+        <div class="scale-row">
+          <div class="scale-label">Beneficio</div>
+          <div class="scale-bar"><div class="scale-fill" style="background: var(--teal); width: 85%;">85%</div></div>
+        </div>
+        <div class="scale-row">
+          <div class="scale-label">Impacto</div>
+          <div class="scale-bar"><div class="scale-fill" style="background: var(--lime); color: var(--ink); width: 78%;">78%</div></div>
+        </div>
+        <div class="scale-row">
+          <div class="scale-label">Coste</div>
+          <div class="scale-bar"><div class="scale-fill" style="background: var(--pink); width: 45%;">45%</div></div>
+        </div>
+        <div class="scale-row">
+          <div class="scale-label">Tiempo</div>
+          <div class="scale-bar"><div class="scale-fill" style="background: var(--orange); color: var(--ink); width: 60%;">60%</div></div>
+        </div>
+        <p style="margin-top: 24px; font-size: 0.9rem; color: var(--ink-soft); font-style: italic;">→ Ejemplo de análisis para un proceso concreto. Cada caso tiene su propio gráfico.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ §07 TENDENCIAS ============ -->
+<section id="tendencias" class="sec-tendencias">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-num">§ 07 — LO QUE SE LLEVA AHORA</div>
+      <h2 class="section-title">Tendencias <span class="u-pink">actuales</span>.</h2>
+    </div>
+
+    <p class="reveal" style="font-size: 1.15rem; max-width: 720px; margin-bottom: 40px;">
+      Cinco enfoques que están redefiniendo cómo las empresas atraen y filtran talento hoy.
+    </p>
+
+    <div class="tendencias-grid">
+      <div class="tendencia-card reveal">
+        <div class="tendencia-emoji">❤️</div>
+        <h4>Inbound Recruiting</h4>
+        <p>Atraer al talento como si fuera un cliente. Que vengan ellos a ti.</p>
+      </div>
+      <div class="tendencia-card reveal">
+        <div class="tendencia-emoji">🎮</div>
+        <h4>Gamificación</h4>
+        <p>Pruebas con mecánicas de juego para evaluar habilidades de forma natural.</p>
+      </div>
+      <div class="tendencia-card reveal">
+        <div class="tendencia-emoji">📱</div>
+        <h4>Social Recruiting</h4>
+        <p>LinkedIn, Instagram, TikTok... la captación pasa por las redes.</p>
+      </div>
+      <div class="tendencia-card reveal">
+        <div class="tendencia-emoji">🤝</div>
+        <h4>Reclutamiento colaborativo</h4>
+        <p>El equipo entero participa en la decisión: no solo RR.HH.</p>
+      </div>
+      <div class="tendencia-card reveal">
+        <div class="tendencia-emoji">🤖</div>
+        <h4>Inteligencia Artificial</h4>
+        <p>Filtrado automatizado de CVs, matching de perfiles y entrevistas con IA.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ §08 SELECCIÓN ============ -->
+<section id="seleccion" class="sec-seleccion">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-num">§ 08 — TOMAR LA DECISIÓN</div>
+      <h2 class="section-title">Selección de <span class="u-lime">personas</span>.</h2>
+    </div>
+
+    <p class="reveal" style="font-size: 1.2rem; max-width: 760px; opacity: 0.9;">
+      La selección consiste en <strong style="background: var(--lime); color: var(--ink); padding: 0 6px;">dos cosas</strong> que parecen una sola pero no lo son.
+    </p>
+
+    <div class="seleccion-duo">
+      <div class="seleccion-card reveal">
+        <div class="big-num">01</div>
+        <h3>Recopilar información sobre el candidato</h3>
+        <p>Toda la información que necesitas para predecir cómo rendirá esta persona si la contratamos: conocimientos, habilidades, actitudes, contexto.</p>
+      </div>
+      <div class="seleccion-card reveal">
+        <div class="big-num">02</div>
+        <h3>Tomar la decisión de a quién contratar</h3>
+        <p>El paso que más se nota. Con la información en la mano, decidir entre los finalistas. La decisión solo es tan buena como la información en la que se basa.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ §09 PREDICTORES ============ -->
+<section class="sec-predictores">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-num">§ 09 — ¿QUÉ INFORMACIÓN RECOJO?</div>
+      <h2 class="section-title">Los 3 grupos de <span class="u-pink">predictores</span>.</h2>
+    </div>
+
+    <div class="pred-intro reveal">
+      <strong>Predictores de selección</strong> → indicadores que ayudan a anticipar el rendimiento del candidato cuando se haya incorporado al puesto. Se agrupan en tres bloques.
+    </div>
+
+    <div class="pred-grid">
+      <div class="pred-card reveal">
+        <div class="label">→ Bloque 01</div>
+        <h3>Organización y contexto</h3>
+        <ul>
+          <li>Estrategia de la empresa</li>
+          <li>Normativa aplicable</li>
+          <li>Mercado de trabajo</li>
+          <li>Puestos disponibles en la empresa</li>
+        </ul>
+      </div>
+      <div class="pred-card reveal">
+        <div class="label">→ Bloque 02</div>
+        <h3>Puesto de trabajo</h3>
+        <ul>
+          <li>Diseño del puesto de trabajo</li>
+          <li>Horario laboral</li>
+          <li>Lugar de trabajo</li>
+          <li>Tiempos y dedicación</li>
+        </ul>
+      </div>
+      <div class="pred-card reveal">
+        <div class="label">→ Bloque 03</div>
+        <h3>Candidato al puesto</h3>
+        <ul>
+          <li>Conocimientos</li>
+          <li>Habilidades</li>
+          <li>Aptitudes</li>
+          <li>Referencias</li>
+          <li>Intereses</li>
+          <li>Personalidad</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ §10 FASES DEL PROCESO ============ -->
+<section id="fases" class="sec-fases">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-num">§ 10 — PASO A PASO</div>
+      <h2 class="section-title">Las <span class="u-pink">10 fases</span> del proceso de selección.</h2>
+    </div>
+
+    <p class="reveal" style="font-size: 1.15rem; max-width: 720px; margin-bottom: 30px;">
+      Haz clic en cada fase para ver su detalle. La última (entrevista con CEO*) suele ser opcional, depende del puesto.
+    </p>
+
+    <div class="fases-flow reveal">
+      <button class="fase-step" data-fase="1" data-active="true"><div class="fase-num">01</div><h5>Requerimiento de personal</h5></button>
+      <button class="fase-step" data-fase="2"><div class="fase-num">02</div><h5>Publicación / búsqueda directa</h5></button>
+      <button class="fase-step" data-fase="3"><div class="fase-num">03</div><h5>Filtrado de CVs</h5></button>
+      <button class="fase-step" data-fase="4"><div class="fase-num">04</div><h5>Entrevista telefónica</h5></button>
+      <button class="fase-step" data-fase="5"><div class="fase-num">05</div><h5>Entrevista personal</h5></button>
+      <button class="fase-step" data-fase="6"><div class="fase-num">06</div><h5>Informe de RRHH</h5></button>
+      <button class="fase-step" data-fase="7"><div class="fase-num">07</div><h5>Entrevista técnica</h5></button>
+      <button class="fase-step" data-fase="8"><div class="fase-num">08</div><h5>Informe técnico</h5></button>
+      <button class="fase-step" data-fase="9"><div class="fase-num">09</div><h5>Análisis y valoración</h5></button>
+      <button class="fase-step" data-fase="10"><div class="fase-num">10</div><h5>Entrevista con el CEO*</h5></button>
+    </div>
+
+    <div class="fases-detail reveal">
+      <div class="fase-panel" data-fase="1" data-active="true">
+        <div class="panel-num">FASE 01 / 10</div>
+        <h4>Requerimiento de personal</h4>
+        <p>El responsable del área detecta la necesidad y formaliza la petición a RR.HH. Es el punto cero: define qué se busca, por qué y para cuándo.</p>
+      </div>
+      <div class="fase-panel" data-fase="2">
+        <div class="panel-num">FASE 02 / 10</div>
+        <h4>Publicación de oferta / búsqueda directa</h4>
+        <p>Se lanza la oferta a las fuentes de reclutamiento elegidas (portales, redes, agencias) o se inicia una búsqueda activa (headhunting, LinkedIn search).</p>
+      </div>
+      <div class="fase-panel" data-fase="3">
+        <div class="panel-num">FASE 03 / 10</div>
+        <h4>Filtrado de CVs</h4>
+        <p>Criba inicial de los CVs recibidos. Se descartan los que no cumplen requisitos obligatorios y se priorizan los más alineados con el perfil buscado.</p>
+      </div>
+      <div class="fase-panel" data-fase="4">
+        <div class="panel-num">FASE 04 / 10</div>
+        <h4>Entrevista telefónica</h4>
+        <p>Primer contacto breve, normalmente con RR.HH. Sirve para validar disponibilidad, expectativas salariales y descartar incompatibilidades antes de invertir más tiempo.</p>
+      </div>
+      <div class="fase-panel" data-fase="5">
+        <div class="panel-num">FASE 05 / 10</div>
+        <h4>Entrevista personal</h4>
+        <p>Entrevista en profundidad con RR.HH. Se evalúan competencias, motivación, encaje cultural y se valida la información del CV.</p>
+      </div>
+      <div class="fase-panel" data-fase="6">
+        <div class="panel-num">FASE 06 / 10</div>
+        <h4>Informe de RR.HH.</h4>
+        <p>RR.HH. elabora un informe con su valoración del candidato tras las entrevistas iniciales y se lo pasa al responsable técnico.</p>
+      </div>
+      <div class="fase-panel" data-fase="7">
+        <div class="panel-num">FASE 07 / 10</div>
+        <h4>Entrevista técnica</h4>
+        <p>El responsable del área (no RR.HH.) evalúa los conocimientos técnicos específicos del puesto: pruebas, casos prácticos, conocimientos concretos.</p>
+      </div>
+      <div class="fase-panel" data-fase="8">
+        <div class="panel-num">FASE 08 / 10</div>
+        <h4>Informe técnico</h4>
+        <p>El responsable técnico documenta su valoración. Se cruza con el informe de RR.HH. para tener una visión completa: encaje + competencia técnica.</p>
+      </div>
+      <div class="fase-panel" data-fase="9">
+        <div class="panel-num">FASE 09 / 10</div>
+        <h4>Análisis y valoración</h4>
+        <p>Se comparan todos los finalistas con la información acumulada. Aquí entran en juego los enfoques de toma de decisiones (predictor único o múltiple).</p>
+      </div>
+      <div class="fase-panel" data-fase="10">
+        <div class="panel-num">FASE 10 / 10</div>
+        <h4>Entrevista con el CEO <span style="font-size: 0.9rem; opacity: 0.6;">(opcional)</span></h4>
+        <p>En puestos clave o en empresas pequeñas, hay un último filtro con dirección general. No siempre se hace: depende del nivel del puesto y la cultura de la organización.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ §11 TOMA DE DECISIONES ============ -->
+<section id="decisiones" class="sec-decisiones">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-num">§ 11 — ¿CÓMO ELIJO?</div>
+      <h2 class="section-title">Enfoques de <span class="u-lime">toma de decisiones</span>.</h2>
+    </div>
+
+    <p class="reveal" style="font-size: 1.15rem; max-width: 720px; margin-bottom: 20px;">
+      A la hora de decidir entre candidatos, existen dos grandes enfoques: usar <strong>un solo</strong> predictor o usar <strong>varios</strong>.
+    </p>
+
+    <div class="decisiones-wrap">
+      <div class="deci-single reveal">
+        <div class="badge">→ Enfoque A</div>
+        <h3>Predictor único</h3>
+        <p>Utiliza <strong>sólo una información</strong> para decidir.</p>
+        <p style="margin-top: 12px; font-size: 0.95rem; font-style: italic; opacity: 0.85;">Rápido, pero pobre en matices.</p>
+      </div>
+
+      <div class="deci-multi reveal">
+        <div class="badge">→ Enfoque B</div>
+        <h3>Predictores múltiples</h3>
+        <p>Combina varias informaciones para decidir. Se subdivide en tres modalidades:</p>
+        <div class="deci-multi-list">
+          <div class="deci-item">
+            <h5>No compensación</h5>
+            <p>Suspender en un predictor no se puede compensar con los demás.</p>
+            <ul>
+              <li><strong>Modelo de cortes</strong>: corte mínimo en cada predictor</li>
+              <li><strong>Modelo de salto de vallas</strong>: superar cada fase para pasar</li>
+            </ul>
+          </div>
+          <div class="deci-item">
+            <h5>Compensación</h5>
+            <p>Una puntuación alta en un predictor compensa una baja en otro. Se suma todo.</p>
+          </div>
+          <div class="deci-item" style="grid-column: 1 / -1;">
+            <h5>Combinado</h5>
+            <p>Mezcla los dos anteriores: primero corte mínimo en lo crítico, luego compensación entre el resto. Es el más utilizado en la práctica.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ §12 FIABILIDAD Y VALIDEZ ============ -->
+<section class="sec-caract">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-num">§ 12 — DOS CRITERIOS CLAVE</div>
+      <h2 class="section-title">Características de los <span class="u-purple">predictores</span>.</h2>
+    </div>
+
+    <p class="reveal" style="font-size: 1.15rem; max-width: 720px; margin-bottom: 40px;">
+      No todos los predictores son igual de útiles. Para serlo, necesitan cumplir <strong>dos requisitos</strong>: ser fiables y ser válidos.
+    </p>
+
+    <div class="caract-defs">
+      <div class="caract-def reveal">
+        <div class="big-letter">F</div>
+        <h3>Fiabilidad</h3>
+        <p class="lead">Estabilidad del predictor de selección. ¿Mide siempre lo mismo si se repite?</p>
+        <ul>
+          <li><strong>Test-retest</strong>: medir en dos momentos distintos y comparar los resultados.</li>
+          <li><strong>Consistencia interna</strong>: medir el grado de homogeneidad del instrumento.</li>
+        </ul>
+      </div>
+      <div class="caract-def right reveal">
+        <div class="big-letter">V</div>
+        <h3>Validez</h3>
+        <p class="lead">Exactitud con que un instrumento mide el atributo concreto que dice medir.</p>
+        <ul>
+          <li><strong>Empírica</strong>: grado en que un predictor se relaciona con un criterio de rendimiento real.</li>
+          <li><strong>De contenido</strong>: idoneidad para recoger la información, sin un rendimiento real medido.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="reveal" style="font-size: 2rem; margin-bottom: 8px;">Las 4 combinaciones posibles.</h3>
+    <p class="reveal" style="font-size: 1rem; margin-bottom: 30px; opacity: 0.9;">Imagina una diana. Lo ideal: dar siempre cerca del centro.</p>
+
+    <div class="targets-row">
+      <div class="target-card reveal">
+        <svg class="target-svg" viewBox="0 0 120 120">
+          <circle cx="60" cy="60" r="55" fill="#FFF1E6" stroke="#1F1233" stroke-width="2"/>
+          <circle cx="60" cy="60" r="42" fill="#FF3D7F" stroke="#1F1233" stroke-width="2"/>
+          <circle cx="60" cy="60" r="28" fill="#FFFAF3" stroke="#1F1233" stroke-width="2"/>
+          <circle cx="60" cy="60" r="14" fill="#FF3D7F" stroke="#1F1233" stroke-width="2"/>
+          <!-- Tight grouping off-center -->
+          <circle cx="35" cy="40" r="3" fill="#1F1233"/>
+          <circle cx="38" cy="42" r="3" fill="#1F1233"/>
+          <circle cx="34" cy="45" r="3" fill="#1F1233"/>
+          <circle cx="36" cy="38" r="3" fill="#1F1233"/>
+        </svg>
+        <h5>Tiros agrupados, fuera del centro</h5>
+        <div class="target-status">
+          <span class="target-tag yes">Fiable</span>
+          <span class="target-tag no">No válido</span>
+        </div>
+      </div>
+
+      <div class="target-card reveal">
+        <svg class="target-svg" viewBox="0 0 120 120">
+          <circle cx="60" cy="60" r="55" fill="#FFF1E6" stroke="#1F1233" stroke-width="2"/>
+          <circle cx="60" cy="60" r="42" fill="#FF3D7F" stroke="#1F1233" stroke-width="2"/>
+          <circle cx="60" cy="60" r="28" fill="#FFFAF3" stroke="#1F1233" stroke-width="2"/>
+          <circle cx="60" cy="60" r="14" fill="#FF3D7F" stroke="#1F1233" stroke-width="2"/>
+          <!-- Spread around center -->
+          <circle cx="60" cy="35" r="3" fill="#1F1233"/>
+          <circle cx="80" cy="55" r="3" fill="#1F1233"/>
+          <circle cx="40" cy="60" r="3" fill="#1F1233"/>
+          <circle cx="65" cy="80" r="3" fill="#1F1233"/>
+          <circle cx="50" cy="45" r="3" fill="#1F1233"/>
+        </svg>
+        <h5>Tiros dispersos alrededor del centro</h5>
+        <div class="target-status">
+          <span class="target-tag maybe">Poca fiabilidad</span>
+          <span class="target-tag maybe">Poco válido</span>
+        </div>
+      </div>
+
+      <div class="target-card reveal">
+        <svg class="target-svg" viewBox="0 0 120 120">
+          <circle cx="60" cy="60" r="55" fill="#FFF1E6" stroke="#1F1233" stroke-width="2"/>
+          <circle cx="60" cy="60" r="42" fill="#FF3D7F" stroke="#1F1233" stroke-width="2"/>
+          <circle cx="60" cy="60" r="28" fill="#FFFAF3" stroke="#1F1233" stroke-width="2"/>
+          <circle cx="60" cy="60" r="14" fill="#FF3D7F" stroke="#1F1233" stroke-width="2"/>
+          <!-- Random everywhere -->
+          <circle cx="25" cy="30" r="3" fill="#1F1233"/>
+          <circle cx="90" cy="40" r="3" fill="#1F1233"/>
+          <circle cx="30" cy="85" r="3" fill="#1F1233"/>
+          <circle cx="85" cy="85" r="3" fill="#1F1233"/>
+          <circle cx="60" cy="25" r="3" fill="#1F1233"/>
+        </svg>
+        <h5>Tiros totalmente aleatorios</h5>
+        <div class="target-status">
+          <span class="target-tag no">No fiable</span>
+          <span class="target-tag no">No válido</span>
+        </div>
+      </div>
+
+      <div class="target-card reveal">
+        <svg class="target-svg" viewBox="0 0 120 120">
+          <circle cx="60" cy="60" r="55" fill="#FFF1E6" stroke="#1F1233" stroke-width="2"/>
+          <circle cx="60" cy="60" r="42" fill="#FF3D7F" stroke="#1F1233" stroke-width="2"/>
+          <circle cx="60" cy="60" r="28" fill="#FFFAF3" stroke="#1F1233" stroke-width="2"/>
+          <circle cx="60" cy="60" r="14" fill="#FF3D7F" stroke="#1F1233" stroke-width="2"/>
+          <!-- All in bullseye -->
+          <circle cx="58" cy="58" r="3" fill="#1F1233"/>
+          <circle cx="62" cy="60" r="3" fill="#1F1233"/>
+          <circle cx="60" cy="64" r="3" fill="#1F1233"/>
+          <circle cx="64" cy="56" r="3" fill="#1F1233"/>
+          <text x="60" y="105" text-anchor="middle" font-size="10" font-weight="700" fill="#B8E62F">★ IDEAL ★</text>
+        </svg>
+        <h5>Tiros agrupados EN el centro</h5>
+        <div class="target-status">
+          <span class="target-tag yes">Fiable</span>
+          <span class="target-tag yes">Válido</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ §13 INSTRUMENTOS ============ -->
+<section class="sec-instrumentos">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-num">§ 13 — LAS HERRAMIENTAS</div>
+      <h2 class="section-title">Instrumentos de <span class="u-orange">selección</span>.</h2>
+    </div>
+
+    <p class="reveal" style="font-size: 1.15rem; max-width: 720px; margin-bottom: 10px;">
+      Las 6 herramientas más habituales para recoger información sobre el candidato. Cada una mide cosas distintas y se combina según el puesto.
+    </p>
+
+    <div class="instr-grid">
+      <div class="instr-card reveal">
+        <div class="instr-emoji">📄</div>
+        <h5>CV</h5>
+      </div>
+      <div class="instr-card reveal">
+        <div class="instr-emoji">💬</div>
+        <h5>Entrevistas de selección</h5>
+      </div>
+      <div class="instr-card reveal">
+        <div class="instr-emoji">🎯</div>
+        <h5>Simulaciones de trabajo</h5>
+      </div>
+      <div class="instr-card reveal">
+        <div class="instr-emoji">📞</div>
+        <h5>Referencias</h5>
+      </div>
+      <div class="instr-card reveal">
+        <div class="instr-emoji">✍️</div>
+        <h5>Pruebas escritas</h5>
+      </div>
+      <div class="instr-card reveal">
+        <div class="instr-emoji">🏢</div>
+        <h5>Centros de evaluación</h5>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ §14 LA ENTREVISTA ============ -->
+<section id="entrevista" class="sec-entrevista">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-num">§ 14 — LA REINA DE TODAS</div>
+      <h2 class="section-title">La <span class="u-gold">entrevista</span> de selección.</h2>
+    </div>
+
+    <div class="ent-intro reveal">
+      Es el método de selección <span class="big">más utilizado</span>… pero también <span class="big">el más subjetivo</span>. ¿Por qué? Porque depende casi todo del entrevistador.
+    </div>
+
+    <h3 class="ent-section-h reveal">→ Los 3 objetivos de toda entrevista</h3>
+    <div class="ent-obj-grid">
+      <div class="ent-obj reveal">
+        <div class="obj-num">01</div>
+        <h4>Obtener una primera impresión del candidato</h4>
+      </div>
+      <div class="ent-obj reveal">
+        <div class="obj-num">02</div>
+        <h4>"Vender" la empresa al candidato</h4>
+      </div>
+      <div class="ent-obj reveal">
+        <div class="obj-num">03</div>
+        <h4>Conocer las preguntas del candidato</h4>
+      </div>
+    </div>
+
+    <h3 class="ent-section-h reveal">→ Los 5 tipos de entrevista</h3>
+    <div class="ent-types">
+      <div class="ent-type reveal">
+        <div class="ent-type-num">TIPO 01</div>
+        <h5>En profundidad</h5>
+      </div>
+      <div class="ent-type reveal">
+        <div class="ent-type-num">TIPO 02</div>
+        <h5>De descripción de conducta</h5>
+      </div>
+      <div class="ent-type reveal">
+        <div class="ent-type-num">TIPO 03</div>
+        <h5>Estructurada</h5>
+      </div>
+      <div class="ent-type reveal">
+        <div class="ent-type-num">TIPO 04</div>
+        <h5>De tensión</h5>
+      </div>
+      <div class="ent-type reveal">
+        <div class="ent-type-num">TIPO 05</div>
+        <h5>Ante tribunal</h5>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ §15 ERRORES Y EFECTOS ============ -->
+<section class="sec-errores">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-num">§ 15 — LOS SESGOS QUE LO ARRUINAN</div>
+      <h2 class="section-title">Errores y <span class="u-lime">efectos</span> en la entrevista.</h2>
+    </div>
+
+    <h3 class="reveal" style="font-size: 1.5rem; margin-bottom: 24px; color: var(--cream);">→ Causas habituales de error</h3>
+    <div class="errores-list">
+      <div class="error-cause reveal">
+        <div class="err-num">ERROR 01</div>
+        <h5>Entrevista con candidato no apto… ¿comprobado?</h5>
+      </div>
+      <div class="error-cause reveal">
+        <div class="err-num">ERROR 02</div>
+        <h5>No integrar la información de la entrevista al analizarla</h5>
+      </div>
+      <div class="error-cause reveal">
+        <div class="err-num">ERROR 03</div>
+        <h5>Falta de información sobre el puesto de trabajo</h5>
+      </div>
+      <div class="error-cause reveal">
+        <div class="err-num">ERROR 04</div>
+        <h5>Repetición de preguntas entre entrevistadores</h5>
+      </div>
+      <div class="error-cause reveal">
+        <div class="err-num">ERROR 05</div>
+        <h5>Presión temporal por cubrir el puesto cuanto antes</h5>
+      </div>
+      <div class="error-cause reveal">
+        <div class="err-num">ERROR 06</div>
+        <h5>Aplicar efectos cognitivos sin darse cuenta ↓</h5>
+      </div>
+    </div>
+
+    <h3 class="efectos-section-title reveal" style="color: var(--cream);">→ Los 4 efectos cognitivos que sesgan al entrevistador</h3>
+    <div class="efectos-grid">
+      <div class="efecto-card reveal">
+        <div class="efecto-icon">↩</div>
+        <h4>Recencia</h4>
+        <p>Valoración centrada en la conducta o respuesta <strong>más reciente</strong> del candidato. Lo último pesa más que el resto.</p>
+      </div>
+      <div class="efecto-card reveal">
+        <div class="efecto-icon">↪</div>
+        <h4>Primacía</h4>
+        <p>Valoración centrada en la <strong>primera</strong> respuesta o impresión. Lo primero condiciona todo lo demás.</p>
+      </div>
+      <div class="efecto-card reveal">
+        <div class="efecto-icon">⇄</div>
+        <h4>Contraste</h4>
+        <p>Valoración <strong>comparada</strong> con el resto de candidatos u opiniones. Parece mejor o peor según con quién se compare.</p>
+      </div>
+      <div class="efecto-card reveal">
+        <div class="efecto-icon">✦</div>
+        <h4>Halo (vs Eco)</h4>
+        <p>Extrapolar una cualidad positiva al resto del conjunto. "Habla muy bien, debe ser bueno en todo".</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ §16 ON BOARDING ============ -->
+<section id="onboarding" class="sec-onboarding">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-num">§ 16 — DÍA 1 EN LA EMPRESA</div>
+      <h2 class="section-title">El <span class="u-gold">on boarding</span>.</h2>
+    </div>
+
+    <div class="onb-def reveal">
+      <h3>¿Qué es?</h3>
+      <p>Es el proceso de <strong>orientación al nuevo trabajador</strong> acerca de la organización en la que va a trabajar.</p>
+      <p>Cultura, valores, máximas, normas... y <strong>sobre todo</strong>, ayuda a saber qué se espera de ti.</p>
+      <div class="arrow-label">→ Mal on boarding: cierras la puerta y no vuelves. Buen on boarding: encuentras tu sitio.</div>
+    </div>
+
+    <h3 class="reveal" style="font-size: 2rem; margin-bottom: 24px; color: var(--cream);">→ Los 4 objetivos del on boarding</h3>
+    <div class="onb-objs">
+      <div class="onb-obj reveal">
+        <div class="obj-n">01</div>
+        <h5>Reducir costes de inicio de productividad</h5>
+      </div>
+      <div class="onb-obj reveal">
+        <div class="obj-n">02</div>
+        <h5>Reducir la rotación no deseada</h5>
+      </div>
+      <div class="onb-obj reveal">
+        <div class="obj-n">03</div>
+        <h5>Menos ansiedad y menos estrés</h5>
+      </div>
+      <div class="onb-obj reveal">
+        <div class="obj-n">04</div>
+        <h5>Ahorro de tiempo al resto del equipo</h5>
+      </div>
+    </div>
+
+    <h3 class="info-title reveal">→ Información común en un on boarding</h3>
+    <div class="info-grid">
+      <div class="info-block reveal">
+        <div class="info-label">→ 01 General</div>
+        <h5>Empresa</h5>
+        <p>Historia, valores, normas, organigrama, instalaciones.</p>
+      </div>
+      <div class="info-block reveal">
+        <div class="info-label">→ 02 Beneficios</div>
+        <h5>Lo que te dan</h5>
+        <p>Seguro de salud, comidas, becas, formaciones.</p>
+      </div>
+      <div class="info-block reveal">
+        <div class="info-label">→ 03 Deberes</div>
+        <h5>Lo que debes</h5>
+        <p>Horarios, fichajes, PRL.</p>
+      </div>
+      <div class="info-block reveal">
+        <div class="info-label">→ 04 Derechos</div>
+        <h5>Tu retribución</h5>
+        <p>Salario, vacaciones, permisos.</p>
+      </div>
+      <div class="info-block reveal">
+        <div class="info-label">→ 05 Relevante</div>
+        <h5>Día a día</h5>
+        <p>Planos, sugerencias, herramientas, contactos clave.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand"><span class="dot"></span>Tema 04</div>
+        <div style="font-family: 'Bricolage Grotesque'; font-size: 1.1rem; opacity: 0.7; margin-top: 6px;">Reclutamiento, selección y on boarding</div>
+      </div>
+      <div class="footer-meta">
+        DIRECCIÓN DE RECURSOS HUMANOS<br/>
+        Material académico · Cloud Company 2025
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ===== Caminos toggle =====
+  const caminosBtns = document.querySelectorAll('.caminos-tab');
+  const caminosPanes = document.querySelectorAll('.caminos-pane');
+  caminosBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const t = btn.dataset.tab;
+      caminosBtns.forEach(b => b.dataset.active = 'false');
+      btn.dataset.active = 'true';
+      caminosPanes.forEach(p => p.dataset.active = p.dataset.tab === t ? 'true' : 'false');
+    });
+  });
+
+  // ===== Fuentes toggle =====
+  const fuentesBtns = document.querySelectorAll('.fuentes-tab');
+  const fuentesPanes = document.querySelectorAll('.fuentes-pane');
+  fuentesBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const t = btn.dataset.tab;
+      fuentesBtns.forEach(b => b.dataset.active = 'false');
+      btn.dataset.active = 'true';
+      fuentesPanes.forEach(p => p.dataset.active = p.dataset.tab === t ? 'true' : 'false');
+    });
+  });
+
+  // ===== Fases interactive =====
+  const faseSteps = document.querySelectorAll('.fase-step');
+  const fasePanels = document.querySelectorAll('.fase-panel');
+  faseSteps.forEach(step => {
+    step.addEventListener('click', () => {
+      const f = step.dataset.fase;
+      faseSteps.forEach(s => s.dataset.active = 'false');
+      step.dataset.active = 'true';
+      fasePanels.forEach(p => p.dataset.active = p.dataset.fase === f ? 'true' : 'false');
+    });
+  });
+
+  // ===== Reveal on scroll =====
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => observer.observe(r));
+</script>
+
+</body>
+</html>
